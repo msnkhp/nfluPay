@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CredoConnect — AI Influencer Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p: #6C4DFF;
+  --p2: #8B6FFF;
+  --p3: #A88BFF;
+  --pl: #EDE9FF;
+  --pl2: #F5F3FF;
+  --bg: #FAFAFA;
+  --bg2: #F0EEF8;
+  --surface: #FFFFFF;
+  --border: rgba(108,77,255,0.12);
+  --border2: rgba(108,77,255,0.2);
+  --text: #0F0E17;
+  --text2: #5C5A70;
+  --text3: #9997B0;
+  --success: #10B981;
+  --warn: #F59E0B;
+  --danger: #EF4444;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow: 0 1px 3px rgba(108,77,255,0.08), 0 4px 16px rgba(108,77,255,0.06);
+  --shadow-lg: 0 8px 32px rgba(108,77,255,0.14);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--p3); border-radius:99px; }
+
+/* ── Typography ── */
+.font-display { font-family:'Syne',sans-serif; }
+h1,h2,h3,h4 { font-family:'Syne',sans-serif; }
+
+/* ── PAGES ── */
+.page { display:none; min-height:100vh; }
+.page.active { display:flex; }
+
+/* ══════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════ */
+#page-landing {
+  flex-direction:column;
+  background: linear-gradient(135deg, #0F0E17 0%, #1A1428 50%, #0F0E17 100%);
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+#page-landing::before {
+  content:'';
+  position:absolute;
+  width:600px; height:600px;
+  background: radial-gradient(circle, rgba(108,77,255,0.25) 0%, transparent 70%);
+  top:-100px; right:-100px;
+  pointer-events:none;
+}
+#page-landing::after {
+  content:'';
+  position:absolute;
+  width:400px; height:400px;
+  background: radial-gradient(circle, rgba(168,139,255,0.15) 0%, transparent 70%);
+  bottom:100px; left:-50px;
+  pointer-events:none;
+}
+.land-nav {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 60px;
+  position:relative; z-index:10;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.land-logo { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; display:flex; align-items:center; gap:10px; }
+.logo-mark {
+  width:34px; height:34px; border-radius:10px;
+  background:linear-gradient(135deg, #6C4DFF, #A88BFF);
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:800;
+}
+.land-nav-links { display:flex; gap:28px; font-size:14px; opacity:0.7; }
+.land-nav-links a { color:white; text-decoration:none; cursor:pointer; transition:opacity 0.2s; }
+.land-nav-links a:hover { opacity:1; }
+.land-nav-btns { display:flex; gap:10px; }
+
+.land-hero {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:80px 40px 60px;
+  position:relative; z-index:5;
+}
+.land-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(108,77,255,0.2); border:1px solid rgba(108,77,255,0.4);
+  border-radius:99px; padding:6px 16px; font-size:12px;
+  color:var(--p3); margin-bottom:28px;
+  animation: fadeUp 0.6s ease both;
+}
+.land-badge span { width:6px; height:6px; border-radius:50%; background:var(--p3); display:inline-block; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.land-h1 {
+  font-size:clamp(36px,5vw,72px); font-weight:800; line-height:1.05;
+  letter-spacing:-2px; margin-bottom:20px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.land-h1 em { font-style:normal; color:var(--p3); }
+.land-sub {
+  font-size:18px; color:rgba(255,255,255,0.55); max-width:520px; line-height:1.6;
+  margin-bottom:40px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.land-btns { display:flex; gap:12px; animation: fadeUp 0.7s 0.3s ease both; }
+
+.land-stats {
+  display:flex; gap:60px; margin-top:80px;
+  animation: fadeUp 0.7s 0.5s ease both;
+}
+.land-stat { text-align:center; }
+.land-stat-num { font-family:'Syne',sans-serif; font-size:32px; font-weight:700; color:white; }
+.land-stat-label { font-size:13px; color:rgba(255,255,255,0.4); margin-top:4px; }
+
+.land-features {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  padding:60px 60px 80px; position:relative; z-index:5;
+}
+.land-feat {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius-lg); padding:28px;
+  transition:border-color 0.3s, background 0.3s;
+}
+.land-feat:hover { background:rgba(108,77,255,0.1); border-color:rgba(108,77,255,0.3); }
+.land-feat-icon {
+  width:44px; height:44px; border-radius:12px;
+  background:linear-gradient(135deg,rgba(108,77,255,0.3),rgba(168,139,255,0.2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; margin-bottom:14px;
+}
+.land-feat h3 { font-size:16px; font-weight:600; margin-bottom:8px; }
+.land-feat p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; }
+
+/* ══════════════════════════════════
+   AUTH PAGE
+══════════════════════════════════ */
+#page-auth {
+  align-items:stretch;
+}
+.auth-left {
+  flex:1; background:linear-gradient(160deg,#0F0E17,#1A1428);
+  display:flex; flex-direction:column; justify-content:center; padding:60px;
+  position:relative; overflow:hidden;
+}
+.auth-left::before {
+  content:''; position:absolute;
+  width:500px; height:500px;
+  background:radial-gradient(circle,rgba(108,77,255,0.2) 0%,transparent 70%);
+  top:-100px; right:-100px;
+}
+.auth-left-content { position:relative; z-index:2; }
+.auth-left h2 { font-size:36px; font-weight:700; color:white; margin-bottom:12px; }
+.auth-left p { font-size:15px; color:rgba(255,255,255,0.5); line-height:1.6; max-width:340px; }
+.auth-testimonial {
+  margin-top:48px; background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);
+  padding:20px;
+}
+.auth-testimonial p { font-size:14px; color:rgba(255,255,255,0.7); font-style:italic; line-height:1.6; }
+.auth-testimonial-author { display:flex; align-items:center; gap:10px; margin-top:14px; }
+.auth-avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#6C4DFF,#A88BFF); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:white; }
+
+.auth-right {
+  width:480px; background:var(--surface); display:flex; flex-direction:column;
+  justify-content:center; padding:60px 48px;
+  border-left:1px solid var(--border);
+}
+.auth-tabs { display:flex; gap:0; margin-bottom:32px; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+.auth-tab {
+  flex:1; padding:10px; text-align:center; font-size:14px; font-weight:500;
+  cursor:pointer; transition:all 0.2s; color:var(--text2); background:transparent; border:none;
+}
+.auth-tab.active { background:var(--p); color:white; }
+
+.form-group { margin-bottom:16px; }
+.form-label { font-size:13px; font-weight:500; color:var(--text2); margin-bottom:6px; display:block; }
+.form-input {
+  width:100%; padding:11px 14px; border:1px solid var(--border2);
+  border-radius:9px; font-size:14px; font-family:'DM Sans',sans-serif;
+  background:var(--pl2); color:var(--text); outline:none;
+  transition:border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus { border-color:var(--p); box-shadow:0 0 0 3px rgba(108,77,255,0.12); }
+.form-select { appearance:none; cursor:pointer; }
+
+.auth-divider { display:flex; align-items:center; gap:12px; margin:20px 0; }
+.auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+.auth-divider span { font-size:12px; color:var(--text3); }
+
+.wallet-btn {
+  width:100%; padding:12px; border:1px solid var(--border2);
+  border-radius:9px; background:var(--pl2); color:var(--text);
+  font-size:14px; font-family:'DM Sans',sans-serif; font-weight:500;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  gap:10px; transition:all 0.2s;
+}
+.wallet-btn:hover { border-color:var(--p); background:var(--pl); }
+.wallet-icon { font-size:20px; }
+
+/* ══════════════════════════════════
+   DASHBOARD SHELL
+══════════════════════════════════ */
+#page-dashboard {
+  flex-direction:row;
+}
+.sidebar {
+  width:240px; background:var(--surface); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; height:100vh; position:sticky; top:0;
+  overflow-y:auto;
+}
+.sidebar-logo {
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+}
+.sidebar-logo-mark {
+  width:32px; height:32px; border-radius:9px;
+  background:linear-gradient(135deg,#6C4DFF,#A88BFF);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:800; color:white;
+}
+.sidebar-logo-text { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; }
+
+.sidebar-section { padding:8px 12px 0; }
+.sidebar-section-label { font-size:10px; font-weight:600; letter-spacing:0.08em; color:var(--text3); text-transform:uppercase; padding:0 8px; margin-bottom:4px; }
+.nav-link {
+  display:flex; align-items:center; gap:10px; padding:9px 10px;
+  border-radius:9px; font-size:13.5px; font-weight:500;
+  color:var(--text2); cursor:pointer; text-decoration:none;
+  transition:all 0.15s; margin-bottom:1px;
+}
+.nav-link:hover { background:var(--pl2); color:var(--text); }
+.nav-link.active { background:var(--pl); color:var(--p); font-weight:600; }
+.nav-icon { width:18px; text-align:center; font-size:16px; }
+.nav-badge {
+  margin-left:auto; background:var(--p); color:white;
+  font-size:10px; font-weight:700; border-radius:99px;
+  padding:1px 7px; min-width:18px; text-align:center;
+}
+
+.sidebar-wallet {
+  margin:auto 12px 12px;
+  background:var(--pl2); border:1px solid var(--border);
+  border-radius:var(--radius); padding:12px;
+}
+.sidebar-wallet-label { font-size:11px; color:var(--text3); margin-bottom:4px; }
+.sidebar-wallet-addr { font-family:monospace; font-size:11px; color:var(--p); word-break:break-all; }
+.sidebar-wallet-bal { font-size:18px; font-weight:700; color:var(--text); margin-top:8px; font-family:'Syne',sans-serif; }
+.sidebar-wallet-sub { font-size:11px; color:var(--text3); }
+
+.main-content {
+  flex:1; overflow-y:auto; height:100vh;
+}
+.topbar {
+  background:var(--surface); border-bottom:1px solid var(--border);
+  padding:0 28px; height:60px; display:flex; align-items:center;
+  justify-content:space-between; position:sticky; top:0; z-index:50;
+}
+.topbar-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; }
+.topbar-right { display:flex; align-items:center; gap:12px; }
+.topbar-notif {
+  width:36px; height:36px; border-radius:9px; background:var(--pl2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; cursor:pointer; position:relative;
+}
+.notif-dot { position:absolute; top:6px; right:7px; width:7px; height:7px; border-radius:50%; background:var(--danger); border:2px solid var(--surface); }
+.topbar-user {
+  display:flex; align-items:center; gap:9px;
+  background:var(--pl2); border:1px solid var(--border);
+  border-radius:10px; padding:6px 12px 6px 8px; cursor:pointer;
+}
+.user-avatar {
+  width:28px; height:28px; border-radius:8px;
+  background:linear-gradient(135deg,#6C4DFF,#A88BFF);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700; color:white;
+}
+.user-name { font-size:13px; font-weight:600; }
+.user-role { font-size:11px; color:var(--text3); }
+
+.content-area { padding:28px; }
+.content-section { display:none; }
+.content-section.active { display:block; }
+
+/* ══════════════════════════════════
+   COMPONENTS
+══════════════════════════════════ */
+/* Buttons */
+.btn {
+  padding:10px 20px; border-radius:9px; font-size:14px; font-weight:500;
+  font-family:'DM Sans',sans-serif; cursor:pointer; border:none;
+  transition:all 0.15s; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary { background:var(--p); color:white; }
+.btn-primary:hover { background:var(--p2); transform:translateY(-1px); box-shadow:0 4px 12px rgba(108,77,255,0.3); }
+.btn-secondary { background:var(--pl); color:var(--p); border:1px solid var(--border2); }
+.btn-secondary:hover { background:var(--pl2); border-color:var(--p); }
+.btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border); }
+.btn-ghost:hover { background:var(--pl2); color:var(--text); }
+.btn-danger { background:#FEF2F2; color:var(--danger); border:1px solid rgba(239,68,68,0.2); }
+.btn-sm { padding:7px 14px; font-size:12px; }
+.btn-xs { padding:4px 10px; font-size:11px; border-radius:6px; }
+.btn-icon { padding:9px; }
+
+/* Cards */
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:20px;
+  box-shadow:var(--shadow);
+}
+.card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.card-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; }
+.card-sub { font-size:12px; color:var(--text3); margin-top:2px; }
+
+/* Metric cards */
+.metric-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+.metric-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:18px 20px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.metric-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--p),var(--p3));
+}
+.metric-icon {
+  width:38px; height:38px; border-radius:10px; background:var(--pl);
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+  margin-bottom:12px;
+}
+.metric-val { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:var(--text); }
+.metric-label { font-size:12px; color:var(--text3); margin-top:3px; }
+.metric-change { font-size:11px; margin-top:6px; display:flex; align-items:center; gap:4px; }
+.metric-change.up { color:var(--success); }
+.metric-change.down { color:var(--danger); }
+
+/* Badges */
+.badge {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:3px 9px; border-radius:99px; font-size:11px; font-weight:600;
+}
+.badge-success { background:#DCFCE7; color:#166534; }
+.badge-warning { background:#FEF3C7; color:#92400E; }
+.badge-danger { background:#FEE2E2; color:#991B1B; }
+.badge-info { background:var(--pl); color:var(--p); }
+.badge-gray { background:#F3F4F6; color:#6B7280; }
+.badge-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+/* Tables */
+.table-wrap { overflow-x:auto; border-radius:var(--radius); border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+thead { background:var(--bg2); }
+th { padding:11px 14px; text-align:left; font-size:11px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text3); border-bottom:1px solid var(--border); }
+td { padding:13px 14px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
+tr:last-child td { border-bottom:none; }
+tbody tr { transition:background 0.1s; }
+tbody tr:hover { background:var(--pl2); }
+
+/* Score bar */
+.score-bar { display:flex; align-items:center; gap:8px; }
+.score-track { flex:1; height:5px; background:var(--bg2); border-radius:99px; overflow:hidden; }
+.score-fill { height:100%; background:linear-gradient(90deg,var(--p),var(--p3)); border-radius:99px; transition:width 1s ease; }
+.score-val { font-size:12px; font-weight:600; color:var(--p); min-width:30px; text-align:right; }
+
+/* Tier badge */
+.tier-nano { background:#F0FDF4; color:#166534; border:1px solid #BBF7D0; }
+.tier-micro { background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; }
+.tier-macro { background:#FFF7ED; color:#9A3412; border:1px solid #FED7AA; }
+.tier-premium { background:var(--pl); color:var(--p); border:1px solid var(--border2); }
+
+/* AI Score circle */
+.ai-score {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--p),var(--p3));
+  color:white; font-size:13px; font-weight:800;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-family:'Syne',sans-serif;
+}
+
+/* Influencer card */
+.influencer-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:18px;
+  box-shadow:var(--shadow); transition:all 0.2s; cursor:pointer;
+}
+.influencer-card:hover { border-color:var(--p); box-shadow:var(--shadow-lg); transform:translateY(-2px); }
+.inf-card-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.inf-avatar {
+  width:48px; height:48px; border-radius:14px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; font-weight:700; color:white;
+}
+.inf-name { font-weight:700; font-size:14px; }
+.inf-handle { font-size:12px; color:var(--text3); }
+.inf-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; text-align:center; margin-top:12px; }
+.inf-stat-val { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; }
+.inf-stat-label { font-size:10px; color:var(--text3); margin-top:1px; }
+
+/* Contract status */
+.contract-bar {
+  background:var(--pl2); border:1px solid var(--border2);
+  border-radius:var(--radius); padding:14px 18px;
+  display:flex; align-items:center; gap:14px;
+}
+.contract-pulse {
+  width:10px; height:10px; border-radius:50%; background:var(--p); flex-shrink:0;
+  animation:pulse 2s infinite;
+}
+
+/* Modal */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(15,14,23,0.6); backdrop-filter:blur(4px);
+  z-index:1000; align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:var(--surface); border-radius:var(--radius-lg);
+  border:1px solid var(--border); max-width:520px; width:90%;
+  max-height:90vh; overflow-y:auto; padding:28px;
+  animation:modalIn 0.25s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.modal-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; }
+.modal-close { width:32px; height:32px; border-radius:8px; background:var(--bg2); border:none; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; }
+
+/* Toast */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:2000; display:flex; flex-direction:column; gap:8px; }
+.toast {
+  background:var(--text); color:white; padding:12px 18px;
+  border-radius:var(--radius); font-size:13px; font-weight:500;
+  display:flex; align-items:center; gap:10px;
+  animation:toastIn 0.3s ease, toastOut 0.3s ease 3.7s forwards;
+  box-shadow:0 8px 24px rgba(0,0,0,0.2); min-width:260px;
+  border-left:3px solid var(--p3);
+}
+.toast.success { border-left-color:var(--success); }
+.toast.error { border-left-color:var(--danger); }
+@keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+@keyframes toastOut { to{opacity:0;transform:translateX(20px)} }
+
+/* Progress steps */
+.steps { display:flex; align-items:center; gap:0; margin-bottom:24px; }
+.step { display:flex; align-items:center; flex:1; }
+.step-circle {
+  width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700; flex-shrink:0;
+  border:2px solid var(--border); background:var(--surface); color:var(--text3);
+}
+.step.done .step-circle { background:var(--success); border-color:var(--success); color:white; }
+.step.active .step-circle { background:var(--p); border-color:var(--p); color:white; }
+.step-label { font-size:11px; color:var(--text3); margin-left:8px; white-space:nowrap; }
+.step.active .step-label, .step.done .step-label { color:var(--text); }
+.step-line { flex:1; height:2px; background:var(--border); margin:0 8px; }
+.step.done .step-line { background:var(--success); }
+
+/* Chart bar */
+.chart-bars { display:flex; align-items:flex-end; gap:6px; height:120px; padding-top:10px; }
+.chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.chart-bar { width:100%; border-radius:4px 4px 0 0; background:linear-gradient(180deg,var(--p),var(--p3)); transition:height 1s ease; }
+.chart-bar-label { font-size:10px; color:var(--text3); }
+
+/* Profile grid */
+.profile-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+
+/* Tab group */
+.tab-group { display:flex; gap:0; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:20px; background:var(--bg2); }
+.tab-item { flex:1; padding:9px 12px; text-align:center; font-size:13px; font-weight:500; cursor:pointer; color:var(--text2); border:none; background:transparent; transition:all 0.15s; }
+.tab-item.active { background:var(--surface); color:var(--p); font-weight:600; margin:3px; border-radius:8px; }
+
+/* Alert */
+.alert { border-radius:var(--radius); padding:12px 16px; font-size:13px; display:flex; gap:10px; align-items:flex-start; }
+.alert-info { background:var(--pl); border:1px solid var(--border2); color:var(--p); }
+.alert-success { background:#F0FDF4; border:1px solid #BBF7D0; color:#166534; }
+.alert-warn { background:#FFFBEB; border:1px solid #FDE68A; color:#92400E; }
+
+/* Chain viz */
+.chain-flow { display:flex; align-items:center; gap:0; margin:20px 0; overflow-x:auto; }
+.chain-node {
+  flex-shrink:0; text-align:center; padding:10px 14px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); min-width:100px;
+}
+.chain-node.active { border-color:var(--p); background:var(--pl); }
+.chain-node.done { border-color:var(--success); background:#F0FDF4; }
+.chain-arrow { font-size:18px; color:var(--border); margin:0 4px; flex-shrink:0; }
+.chain-icon { font-size:20px; margin-bottom:4px; }
+.chain-label { font-size:11px; font-weight:600; }
+.chain-sub { font-size:10px; color:var(--text3); margin-top:2px; }
+
+/* Responsive helpers */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.flex { display:flex; }
+.flex-col { flex-direction:column; }
+.items-center { align-items:center; }
+.justify-between { justify-content:space-between; }
+.gap-2 { gap:8px; }
+.gap-3 { gap:12px; }
+.gap-4 { gap:16px; }
+.mb-2 { margin-bottom:8px; }
+.mb-3 { margin-bottom:12px; }
+.mb-4 { margin-bottom:16px; }
+.mb-6 { margin-bottom:24px; }
+.mt-4 { margin-top:16px; }
+.text-sm { font-size:13px; }
+.text-xs { font-size:11px; }
+.text-muted { color:var(--text2); }
+.text-tiny { color:var(--text3); }
+.font-bold { font-weight:700; }
+.font-medium { font-weight:500; }
+.mono { font-family:monospace; }
+
+/* Animations */
+.fade-in { animation:fadeIn 0.4s ease both; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* Scrollable card content */
+.scroll-list { max-height:320px; overflow-y:auto; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     LANDING PAGE
+═══════════════════════════════════════ -->
+<div id="page-landing" class="page active">
+  <nav class="land-nav">
+    <div class="land-logo">
+      <div class="logo-mark">CC</div>
+      CredoConnect
+    </div>
+    <div class="land-nav-links">
+      <a>Features</a>
+      <a>Marketplace</a>
+      <a>Pricing</a>
+      <a>Docs</a>
+    </div>
+    <div class="land-nav-btns">
+      <button class="btn btn-ghost" onclick="showAuth('login')">Sign in</button>
+      <button class="btn btn-primary" onclick="showAuth('register')">Get started</button>
+    </div>
+  </nav>
+
+  <div class="land-hero">
+    <div class="land-badge"><span></span> Web3 × AI Influencer Platform — Now Live</div>
+    <h1 class="land-h1">Connect brands &amp; creators<br><em>powered by AI + blockchain</em></h1>
+    <p class="land-sub">CredoConnect matches brands with the perfect influencers using AI, then handles payments through smart contracts — transparent, automatic, trustless.</p>
+    <div class="land-btns">
+      <button class="btn btn-primary" style="font-size:15px;padding:12px 28px;" onclick="showAuth('register')">Launch your campaign</button>
+      <button class="btn btn-ghost" style="font-size:15px;padding:12px 28px;border-color:rgba(255,255,255,0.2);color:white;" onclick="showDashboard('brand')">View demo ↗</button>
+    </div>
+    <div class="land-stats">
+      <div class="land-stat"><div class="land-stat-num">12,400+</div><div class="land-stat-label">Active influencers</div></div>
+      <div class="land-stat"><div class="land-stat-num">$2.4M</div><div class="land-stat-label">Credo distributed</div></div>
+      <div class="land-stat"><div class="land-stat-num">98%</div><div class="land-stat-label">Payment success</div></div>
+    </div>
+  </div>
+
+  <div class="land-features">
+    <div class="land-feat">
+      <div class="land-feat-icon">🤖</div>
+      <h3>AI matchmaking</h3>
+      <p>Weighted ML model scores influencers by engagement rate, niche fit, tier, and past success — ranked in seconds.</p>
+    </div>
+    <div class="land-feat">
+      <div class="land-feat-icon">⛓️</div>
+      <h3>Smart contract payments</h3>
+      <p>Credo tokens locked in escrow. Released automatically when deliverables are approved — no middlemen, no delays.</p>
+    </div>
+    <div class="land-feat">
+      <div class="land-feat-icon">🦊</div>
+      <h3>MetaMask integration</h3>
+      <p>Sign in and sign contracts with your Ethereum wallet. Full on-chain transparency for every transaction.</p>
+    </div>
+    <div class="land-feat">
+      <div class="land-feat-icon">📊</div>
+      <h3>Real-time analytics</h3>
+      <p>Track campaign ROI, engagement stats, and influencer performance with downloadable PDF/CSV reports.</p>
+    </div>
+    <div class="land-feat">
+      <div class="land-feat-icon">🏅</div>
+      <h3>Tier classification</h3>
+      <p>Nano, Micro, Macro, Premium — auto-classified by follower count and engagement, updated in real-time.</p>
+    </div>
+    <div class="land-feat">
+      <div class="land-feat-icon">💱</div>
+      <h3>Token redemption</h3>
+      <p>Convert Credo to JazzCash, Easypaisa, or SadaPay instantly with competitive conversion rates.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     AUTH PAGE
+═══════════════════════════════════════ -->
+<div id="page-auth" class="page">
+  <div class="auth-left">
+    <div class="auth-left-content">
+      <div class="land-logo" style="margin-bottom:40px;">
+        <div class="logo-mark">CC</div>
+        <span style="color:white;">CredoConnect</span>
+      </div>
+      <h2>The future of influencer marketing is on-chain</h2>
+      <p style="margin-top:12px;">Join 12,400+ creators and 800+ brands building authentic campaigns with transparent, automatic payments.</p>
+      <div class="auth-testimonial">
+        <p>"CredoConnect's AI matched me with 3 perfect campaigns in under 10 minutes. Got paid in Credo instantly when I submitted my content."</p>
+        <div class="auth-testimonial-author">
+          <div class="auth-avatar">ZM</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:white;">Zara Malik</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Micro influencer · Fashion · 84K followers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <a onclick="showPage('landing')" style="font-size:13px;color:var(--text3);cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:32px;">← Back</a>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
+      <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+    </div>
+
+    <!-- Login form -->
+    <div id="auth-login-form">
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="login-email" placeholder="you@example.com" value="brand@novatech.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-pass" placeholder="••••••••" value="password123">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:15px;" onclick="handleLogin()">Sign in</button>
+      <div class="auth-divider"><span>or continue with</span></div>
+      <button class="wallet-btn" onclick="connectMetaMask()"><span class="wallet-icon">🦊</span> Connect MetaMask wallet</button>
+      <p style="font-size:12px;color:var(--text3);margin-top:16px;text-align:center;">Demo — brand@novatech.com / influencer@example.com</p>
+    </div>
+
+    <!-- Register form -->
+    <div id="auth-register-form" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">I am a</label>
+        <select class="form-input form-select" id="reg-role">
+          <option value="brand">Brand / Company</option>
+          <option value="influencer">Influencer / Creator</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Full name / Company name</label>
+        <input class="form-input" type="text" placeholder="NovaTech Inc.">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" placeholder="you@company.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:15px;" onclick="handleRegister()">Create account</button>
+      <div class="auth-divider"><span>or</span></div>
+      <button class="wallet-btn" onclick="connectMetaMask()"><span class="wallet-icon">🦊</span> Register with MetaMask</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DASHBOARD PAGE
+═══════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">CC</div>
+      <span class="sidebar-logo-text">CredoConnect</span>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:8px;">
+      <div class="sidebar-section-label">Main</div>
+      <a class="nav-link active" onclick="showSection('overview')">
+        <span class="nav-icon">⊞</span> Overview
+      </a>
+      <a class="nav-link" onclick="showSection('campaigns')">
+        <span class="nav-icon">📢</span> Campaigns
+        <span class="nav-badge" id="badge-campaigns">4</span>
+      </a>
+      <a class="nav-link" onclick="showSection('marketplace')">
+        <span class="nav-icon">🏪</span> Marketplace
+      </a>
+      <a class="nav-link" onclick="showSection('ai-match')">
+        <span class="nav-icon">🤖</span> AI Matching
+      </a>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:8px;">
+      <div class="sidebar-section-label">Finance</div>
+      <a class="nav-link" onclick="showSection('payments')">
+        <span class="nav-icon">💳</span> Payments
+        <span class="nav-badge" id="badge-payments">2</span>
+      </a>
+      <a class="nav-link" onclick="showSection('contracts')">
+        <span class="nav-icon">📄</span> Contracts
+      </a>
+      <a class="nav-link" onclick="showSection('analytics')">
+        <span class="nav-icon">📊</span> Analytics
+      </a>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:8px;">
+      <div class="sidebar-section-label">Account</div>
+      <a class="nav-link" onclick="showSection('profile')">
+        <span class="nav-icon">👤</span> Profile
+      </a>
+      <a class="nav-link" id="admin-link" onclick="showSection('admin')">
+        <span class="nav-icon">🛡️</span> Admin Panel
+      </a>
+      <a class="nav-link" onclick="logout()">
+        <span class="nav-icon">↩</span> Sign out
+      </a>
+    </div>
+
+    <div class="sidebar-wallet">
+      <div class="sidebar-wallet-label">Wallet</div>
+      <div class="sidebar-wallet-addr" id="wallet-addr-display">Not connected</div>
+      <div class="sidebar-wallet-bal" id="wallet-credo-balance">0 CREDO</div>
+      <div class="sidebar-wallet-sub" id="wallet-usd">≈ $0 USD</div>
+      <button class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;margin-top:10px;" id="wallet-connect-btn" onclick="connectMetaMask()">🦊 Connect</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="topbar-title">Overview</div>
+        <div style="font-size:11px;color:var(--text3);" id="topbar-sub">Welcome back!</div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-primary btn-sm" id="action-btn" onclick="openCreateCampaign()">+ New Campaign</button>
+        <div class="topbar-notif">🔔<div class="notif-dot"></div></div>
+        <div class="topbar-user" onclick="showSection('profile')">
+          <div class="user-avatar" id="topbar-avatar">NK</div>
+          <div>
+            <div class="user-name" id="topbar-name">NovaTech</div>
+            <div class="user-role" id="topbar-role">Brand · Premium</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="content-section active fade-in" id="section-overview">
+        <div class="metric-grid" id="metric-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Active campaigns</div>
+                <div class="card-sub">Live and pending</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="showSection('campaigns')">View all →</button>
+            </div>
+            <div id="overview-campaigns-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">AI recommendations</div>
+                <div class="card-sub" id="ai-rec-sub">For your latest campaign</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="showSection('ai-match')">See all →</button>
+            </div>
+            <div id="overview-ai-list"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div><div class="card-title">Engagement performance</div><div class="card-sub">Weekly reach across campaigns</div></div>
+          </div>
+          <div class="chart-bars" id="overview-chart"></div>
+          <div style="display:flex;justify-content:space-between;padding-top:8px;" id="chart-labels"></div>
+        </div>
+
+        <div class="contract-bar mt-4" id="contract-status-bar" style="display:none;">
+          <div class="contract-pulse"></div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;" id="contract-status-text"></div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;" id="contract-status-addr"></div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="showSection('contracts')">View contract →</button>
+        </div>
+      </div>
+
+      <!-- ── CAMPAIGNS ── -->
+      <div class="content-section fade-in" id="section-campaigns">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <div>
+            <h2 style="font-size:20px;font-weight:700;">Campaigns</h2>
+            <p class="text-muted text-sm" style="margin-top:3px;">Manage your influencer marketing campaigns</p>
+          </div>
+          <button class="btn btn-primary" onclick="openCreateCampaign()">+ Create campaign</button>
+        </div>
+
+        <div class="tab-group" style="max-width:400px;">
+          <button class="tab-item active" onclick="filterCampaigns('all',this)">All</button>
+          <button class="tab-item" onclick="filterCampaigns('active',this)">Active</button>
+          <button class="tab-item" onclick="filterCampaigns('pending',this)">Pending</button>
+          <button class="tab-item" onclick="filterCampaigns('completed',this)">Completed</button>
+        </div>
+
+        <div id="campaigns-grid" class="grid-2"></div>
+      </div>
+
+      <!-- ── MARKETPLACE ── -->
+      <div class="content-section fade-in" id="section-marketplace">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <div>
+            <h2 style="font-size:20px;font-weight:700;">Influencer marketplace</h2>
+            <p class="text-muted text-sm" style="margin-top:3px;">Browse and invite verified creators</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <select class="form-input form-select" style="width:140px;padding:8px 12px;font-size:13px;" id="filter-niche" onchange="renderMarketplace()">
+              <option value="">All niches</option>
+              <option>Fashion</option><option>Tech</option>
+              <option>Food</option><option>Gaming</option>
+              <option>Fitness</option><option>Travel</option>
+            </select>
+            <select class="form-input form-select" style="width:130px;padding:8px 12px;font-size:13px;" id="filter-tier" onchange="renderMarketplace()">
+              <option value="">All tiers</option>
+              <option>Nano</option><option>Micro</option>
+              <option>Macro</option><option>Premium</option>
+            </select>
+          </div>
+        </div>
+        <div class="profile-grid" id="marketplace-grid"></div>
+      </div>
+
+      <!-- ── AI MATCHING ── -->
+      <div class="content-section fade-in" id="section-ai-match">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:20px;font-weight:700;">AI matchmaking engine</h2>
+          <p class="text-muted text-sm" style="margin-top:3px;">Configure weights and run recommendations</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Model configuration</div></div>
+            <div class="form-group">
+              <label class="form-label">Campaign category</label>
+              <select class="form-input form-select" id="ai-category">
+                <option>Fashion</option><option>Tech</option><option>Food</option>
+                <option>Gaming</option><option>Fitness</option><option>Travel</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred tier</label>
+              <select class="form-input form-select" id="ai-tier">
+                <option>Any</option><option>Nano</option><option>Micro</option>
+                <option>Macro</option><option>Premium</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Engagement weight: <strong id="w-eng-val">35%</strong></label>
+              <input type="range" min="0" max="60" value="35" oninput="document.getElementById('w-eng-val').textContent=this.value+'%'" style="width:100%;">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category similarity: <strong id="w-cat-val">25%</strong></label>
+              <input type="range" min="0" max="60" value="25" oninput="document.getElementById('w-cat-val').textContent=this.value+'%'" style="width:100%;">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Past success rate: <strong id="w-suc-val">15%</strong></label>
+              <input type="range" min="0" max="40" value="15" oninput="document.getElementById('w-suc-val').textContent=this.value+'%'" style="width:100%;">
+            </div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="runAIMatch()">🤖 Run AI match</button>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title">AI recommendations</div><div class="card-sub" id="ai-results-label">Configure and run to see results</div></div>
+            </div>
+            <div id="ai-results-list"><div style="text-align:center;padding:40px;color:var(--text3);font-size:13px;">Click "Run AI match" to get ranked recommendations</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PAYMENTS ── -->
+      <div class="content-section fade-in" id="section-payments">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:20px;font-weight:700;">Payments & wallet</h2>
+          <p class="text-muted text-sm" style="margin-top:3px;">Manage Credo tokens and redemptions</p>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Credo balance</div></div>
+            <div style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--p);" id="pay-balance">2,450</div>
+            <div style="font-size:13px;color:var(--text3);margin-top:4px;">CREDO ≈ $245 USD</div>
+            <div style="margin-top:20px;display:flex;gap:10px;">
+              <button class="btn btn-primary btn-sm" onclick="openDepositModal()">+ Deposit</button>
+              <button class="btn btn-secondary btn-sm" onclick="openRedeemModal()">💱 Redeem</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Platform revenue model</div></div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.7;">
+              <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);">
+                <span>Transaction fee</span><strong>5%</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);">
+                <span>Token redemption fee</span><strong>2–3%</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);">
+                <span>Brand subscription</span><strong>Free / Premium</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 0;">
+                <span>Profile boost</span><strong>50–200 CREDO</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Transaction history</div><div><span class="badge badge-info" id="tx-count">8 transactions</span></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>TX Hash</th><th>Type</th><th>Amount</th><th>Fee</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="tx-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CONTRACTS ── -->
+      <div class="content-section fade-in" id="section-contracts">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:20px;font-weight:700;">Smart contracts</h2>
+          <p class="text-muted text-sm;margin-top:3px;">On-chain campaign agreements</p>
+        </div>
+
+        <div id="contracts-list"></div>
+      </div>
+
+      <!-- ── ANALYTICS ── -->
+      <div class="content-section fade-in" id="section-analytics">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <div>
+            <h2 style="font-size:20px;font-weight:700;">Analytics</h2>
+            <p class="text-muted text-sm" style="margin-top:3px;">Campaign performance insights</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="exportReport()">⬇ Export CSV</button>
+        </div>
+
+        <div class="metric-grid" id="analytics-metrics"></div>
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Engagement by campaign</div></div>
+            <div class="chart-bars" id="analytics-chart1"></div>
+            <div style="display:flex;justify-content:space-between;padding-top:8px;" id="analytics-chart1-labels"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">ROI breakdown</div></div>
+            <div id="analytics-roi-table" style="font-size:13px;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Top performing influencers</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Influencer</th><th>Campaign</th><th>Reach</th><th>Engagement</th><th>ROI</th><th>Status</th></tr></thead>
+              <tbody id="analytics-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PROFILE ── -->
+      <div class="content-section fade-in" id="section-profile">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:20px;font-weight:700;">Your profile</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+              <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--p),var(--p3));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:white;" id="profile-avatar-big">NK</div>
+              <div>
+                <div style="font-size:18px;font-weight:700;" id="profile-name-big">NovaTech Inc.</div>
+                <div class="badge badge-info" id="profile-role-badge" style="margin-top:6px;">Brand · Premium</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Company name</label>
+              <input class="form-input" id="pf-name" value="NovaTech Inc.">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Industry</label>
+              <input class="form-input" id="pf-industry" value="Technology">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" id="pf-email" value="brand@novatech.com">
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="saveProfile()">Save changes</button>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:16px;">Wallet & subscription</div>
+            <div class="form-group">
+              <label class="form-label">MetaMask address</label>
+              <div class="flex items-center gap-2">
+                <input class="form-input" id="pf-wallet" value="0x4f3cA8b2D1e0c7F5a9bE3d..." readonly style="flex:1;font-family:monospace;font-size:12px;">
+                <button class="btn btn-secondary btn-sm" onclick="connectMetaMask()">🦊</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subscription plan</label>
+              <div style="display:flex;gap:10px;margin-top:4px;">
+                <div style="flex:1;border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;">
+                  <div style="font-weight:600;">Free</div>
+                  <div style="font-size:11px;color:var(--text3);margin-top:4px;">5 campaigns/mo</div>
+                </div>
+                <div style="flex:1;border:2px solid var(--p);border-radius:var(--radius);padding:14px;text-align:center;font-size:13px;background:var(--pl);">
+                  <div style="font-weight:700;color:var(--p);">Premium ✓</div>
+                  <div style="font-size:11px;color:var(--p);margin-top:4px;">Unlimited + AI insights</div>
+                </div>
+              </div>
+            </div>
+            <div class="alert alert-info" style="margin-top:12px;">
+              <span>🛡️</span>
+              <span style="font-size:12px;">Your wallet is verified on Sepolia testnet. All contracts use your connected address.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ADMIN ── -->
+      <div class="content-section fade-in" id="section-admin">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:20px;font-weight:700;">Admin panel</h2>
+          <p class="text-muted text-sm" style="margin-top:3px;">Platform management and approvals</p>
+        </div>
+
+        <div class="metric-grid" id="admin-metrics"></div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Pending approvals</div>
+              <span class="badge badge-warning" id="pending-count">3 pending</span>
+            </div>
+            <div id="admin-pending-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Platform settings</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Platform fee (%)</label>
+              <input class="form-input" type="number" value="5" min="1" max="20" id="admin-fee">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Redemption fee (%)</label>
+              <input class="form-input" type="number" value="2.5" min="1" max="10" id="admin-redeem-fee">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Credo → USD rate</label>
+              <input class="form-input" type="number" value="0.10" step="0.01" id="admin-rate">
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="saveAdminSettings()">Save settings</button>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-header"><div class="card-title">All users</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Role</th><th>Wallet</th><th>Status</th><th>Joined</th><th>Action</th></tr></thead>
+              <tbody id="admin-users-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+  </main>
+</div><!-- /page-dashboard -->
+
+<!-- ═══════════════════════════════════════
+     MODALS
+═══════════════════════════════════════ -->
+
+<!-- Create Campaign Modal -->
+<div class="modal-overlay" id="modal-campaign">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Create new campaign</div>
+      <button class="modal-close" onclick="closeModal('modal-campaign')">✕</button>
+    </div>
+    <div class="steps" id="campaign-steps">
+      <div class="step active"><div class="step-circle">1</div><div class="step-label">Details</div><div class="step-line"></div></div>
+      <div class="step"><div class="step-circle">2</div><div class="step-label">Budget</div><div class="step-line"></div></div>
+      <div class="step"><div class="step-circle">3</div><div class="step-label">Deploy</div></div>
+    </div>
+    <div id="campaign-step-1">
+      <div class="form-group">
+        <label class="form-label">Campaign title</label>
+        <input class="form-input" id="nc-title" placeholder="e.g. Summer Fashion Collection Launch">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input" id="nc-desc" rows="3" placeholder="What is this campaign about?" style="resize:vertical;"></textarea>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input form-select" id="nc-category">
+            <option>Fashion</option><option>Tech</option><option>Food</option>
+            <option>Gaming</option><option>Fitness</option><option>Travel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred tier</label>
+          <select class="form-input form-select" id="nc-tier">
+            <option>Nano</option><option>Micro</option><option>Macro</option><option>Premium</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deliverables</label>
+        <input class="form-input" id="nc-deliverables" placeholder="e.g. 3 Instagram posts + 1 reel + story mentions">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deadline</label>
+        <input class="form-input" type="date" id="nc-deadline">
+      </div>
+    </div>
+    <div id="campaign-step-2" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Budget (Credo tokens)</label>
+        <input class="form-input" type="number" id="nc-budget" placeholder="500" min="10">
+      </div>
+      <div class="alert alert-info" style="margin-bottom:16px;">
+        <span>ℹ️</span>
+        <div style="font-size:12px;">5% platform fee applies. Funds are locked in escrow until deliverables are approved.</div>
+      </div>
+      <div style="background:var(--pl2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+          <span>Campaign budget</span><strong id="nc-budget-display">500 CREDO</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+          <span>Platform fee (5%)</span><strong id="nc-fee-display">25 CREDO</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;color:var(--p);font-weight:700;">
+          <span>Total locked in escrow</span><strong id="nc-total-display">525 CREDO</strong>
+        </div>
+      </div>
+      <div id="nc-budget" onkeyup="updateBudgetCalc()"></div>
+    </div>
+    <div id="campaign-step-3" style="display:none;">
+      <div class="chain-flow">
+        <div class="chain-node done" id="step3-node1"><div class="chain-icon">✅</div><div class="chain-label">Details</div><div class="chain-sub">Saved</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node active" id="step3-node2"><div class="chain-icon">🦊</div><div class="chain-label">MetaMask</div><div class="chain-sub">Sign tx</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node" id="step3-node3"><div class="chain-icon">⛓️</div><div class="chain-label">Deploy</div><div class="chain-sub">On-chain</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node" id="step3-node4"><div class="chain-icon">🎉</div><div class="chain-label">Live!</div><div class="chain-sub">Campaign active</div></div>
+      </div>
+      <div class="alert alert-warn" id="deploy-status">
+        <span>⏳</span>
+        <span>Click "Deploy to blockchain" to sign and create the escrow contract via MetaMask.</span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:20px;">
+      <button class="btn btn-ghost" id="modal-back-btn" onclick="campaignStepBack()" style="display:none;">← Back</button>
+      <button class="btn btn-primary" id="modal-next-btn" onclick="campaignStepNext()" style="margin-left:auto;">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Deposit Modal -->
+<div class="modal-overlay" id="modal-deposit">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal-header">
+      <div class="modal-title">Deposit Credo tokens</div>
+      <button class="modal-close" onclick="closeModal('modal-deposit')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Amount (CREDO)</label>
+      <input class="form-input" type="number" id="deposit-amount" placeholder="500" min="1">
+    </div>
+    <div class="alert alert-info" style="margin-bottom:16px;">
+      <span>🦊</span>
+      <span style="font-size:12px;">This will open MetaMask to confirm the token transfer to your escrow wallet.</span>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="handleDeposit()">Confirm deposit via MetaMask</button>
+  </div>
+</div>
+
+<!-- Redeem Modal -->
+<div class="modal-overlay" id="modal-redeem">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header">
+      <div class="modal-title">Redeem Credo tokens</div>
+      <button class="modal-close" onclick="closeModal('modal-redeem')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Amount to redeem (CREDO)</label>
+      <input class="form-input" type="number" id="redeem-amount" placeholder="100" min="1">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Convert to</label>
+      <select class="form-input form-select" id="redeem-to">
+        <option>JazzCash</option>
+        <option>Easypaisa</option>
+        <option>SadaPay</option>
+      </select>
+    </div>
+    <div style="background:var(--pl2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;font-size:13px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;padding:3px 0;">
+        <span>Conversion rate</span><strong>1 CREDO = $0.10</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:3px 0;">
+        <span>Conversion fee (2.5%)</span><strong>2.5 CREDO</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:3px 0;color:var(--success);font-weight:600;">
+        <span>You receive</span><strong>~$9.75</strong>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="handleRedeem()">💱 Redeem now</button>
+  </div>
+</div>
+
+<!-- Influencer Detail Modal -->
+<div class="modal-overlay" id="modal-influencer">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-title" id="inf-modal-name">Influencer profile</div>
+      <button class="modal-close" onclick="closeModal('modal-influencer')">✕</button>
+    </div>
+    <div id="inf-modal-content"></div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  DATA STORE
+// ════════════════════════════════════════════════════════
+const COLORS = ['#6C4DFF','#A88BFF','#FF6B9D','#06D6A0','#FFB703','#118AB2','#EF476F','#8338EC'];
+
+const DB = {
+  currentUser: null,
+  walletConnected: false,
+  walletAddr: '0x4f3cA8b2D1e0c7F5a9bE3d8c2F1a4e6b7d0C9E1',
+  credoBalance: 2450,
+
+  users: [
+    { id:1, email:'brand@novatech.com', pass:'password123', role:'brand', name:'NovaTech Inc.', initials:'NK', industry:'Technology', wallet:'0x4f3cA8b2D1e0c7F5a9bE3d8c2F1a4e6b7d0C9E1', plan:'Premium', status:'active', joined:'Jan 2025' },
+    { id:2, email:'influencer@example.com', pass:'password123', role:'influencer', name:'Zara Malik', initials:'ZM', niche:'Fashion', followers:84200, engagement:5.8, tier:'Micro', wallet:'0x9aB4eF2c7D5e3A8b1C6d0E9f2A7b4C5e3D8a1F0', plan:'Free', status:'active', joined:'Feb 2025' },
+    { id:3, email:'admin@credoconnect.com', pass:'admin123', role:'admin', name:'CredoConnect', initials:'CC', plan:'Admin', status:'active', joined:'Dec 2024' },
+  ],
+
+  influencers: [
+    { id:1, name:'Zara Malik', handle:'@zaramalik', niche:'Fashion', followers:84200, engagement:5.8, tier:'Micro', successRate:92, location:'Lahore, PK', bio:'Fashion & lifestyle creator. 3+ years, brand collab specialist.', color:'#6C4DFF', verified:true, campaigns:12 },
+    { id:2, name:'Ahmed Siddiqui', handle:'@ahmed_tech', niche:'Tech', followers:210000, engagement:4.2, tier:'Macro', successRate:88, location:'Karachi, PK', bio:'Tech reviewer and gadget enthusiast. YouTube 200K subs.', color:'#118AB2', verified:true, campaigns:8 },
+    { id:3, name:'Fatima Noor', handle:'@fatimanoor', niche:'Food', followers:9800, engagement:8.4, tier:'Nano', successRate:95, location:'Islamabad, PK', bio:'Home cooking and food photography. Authentic, engaged community.', color:'#EF476F', verified:false, campaigns:4 },
+    { id:4, name:'Rida Khan', handle:'@ridakhan_fit', niche:'Fitness', followers:67300, engagement:6.1, tier:'Micro', successRate:90, location:'Lahore, PK', bio:'Fitness coach and wellness advocate. Evidence-based content.', color:'#06D6A0', verified:true, campaigns:15 },
+    { id:5, name:'Omar Farooq', handle:'@omarfgames', niche:'Gaming', followers:450000, engagement:3.8, tier:'Macro', successRate:82, location:'Karachi, PK', bio:'Pro gamer and streamer. Twitch affiliate, YouTube 450K.', color:'#8338EC', verified:true, campaigns:6 },
+    { id:6, name:'Sara Ali', handle:'@sara.travel', niche:'Travel', followers:1200000, engagement:3.2, tier:'Premium', successRate:78, location:'Dubai, UAE', bio:'Travel & luxury lifestyle. Global brand partnerships.', color:'#FFB703', verified:true, campaigns:22 },
+    { id:7, name:'Hassan Raza', handle:'@hassantech', niche:'Tech', followers:28500, engagement:7.3, tier:'Micro', successRate:91, location:'Rawalpindi, PK', bio:'Mobile & software reviews. Urdu tech content creator.', color:'#FF6B9D', verified:true, campaigns:9 },
+    { id:8, name:'Nadia Shah', handle:'@nadiafashion', niche:'Fashion', followers:5600, engagement:9.1, tier:'Nano', successRate:97, location:'Peshawar, PK', bio:'Modest fashion and cultural wear. Highly engaged niche audience.', color:'#A88BFF', verified:false, campaigns:3 },
+    { id:9, name:'Ali Hassan', handle:'@alihassan_food', niche:'Food', followers:142000, engagement:5.5, tier:'Macro', successRate:85, location:'Lahore, PK', bio:'Street food explorer and restaurant reviewer.', color:'#06D6A0', verified:true, campaigns:11 },
+  ],
+
+  campaigns: [
+    { id:1, title:'Summer fashion launch', category:'Fashion', description:'Promote our summer collection across Instagram and TikTok.', deliverables:'3 posts + 1 reel + stories', budget:500, tier:'Micro', deadline:'2026-05-15', status:'active', influencers:[1,7], contractAddr:'0x7f2a4B9c1D3e5F8a0C2b4E6d8F0a2B4c6D8e0F2', brand:1 },
+    { id:2, title:'Tech review series', category:'Tech', description:'Review our new smart home devices in 3-part YouTube series.', deliverables:'3 YouTube videos 10min+', budget:300, tier:'Macro', deadline:'2026-04-30', status:'active', influencers:[2], contractAddr:'0x3A8b4C2d6E0f2A8b4C6d8E0f2A4b6C8d0E2f4A6', brand:1 },
+    { id:3, title:'Gaming tournament promo', category:'Gaming', description:'Promote our gaming peripherals during the tournament.', deliverables:'5 streams + product showcase', budget:750, tier:'Macro', deadline:'2026-06-01', status:'pending', influencers:[], contractAddr:'0xB4C6D8E0F2A4B6C8D0E2F4A6B8C0D2E4F6A8B0C', brand:1 },
+    { id:4, title:'Eid collection drop', category:'Fashion', description:'Showcase our Eid collection before the holiday season.', deliverables:'5 posts + 2 reels', budget:400, tier:'Micro', deadline:'2026-03-15', status:'draft', influencers:[], contractAddr:null, brand:1 },
+    { id:5, title:'Fitness challenge', category:'Fitness', description:'30-day fitness challenge campaign with our app.', deliverables:'Daily stories + 4 posts', budget:200, tier:'Micro', deadline:'2026-04-10', status:'completed', influencers:[4], contractAddr:'0xF2A4B6C8D0E2F4A6B8C0D2E4F6A8B0C2D4E6F8A', brand:1 },
+  ],
+
+  transactions: [
+    { hash:'0x7f2a...e391', type:'Campaign deposit', amount:500, fee:25, status:'confirmed', date:'Mar 28 2026' },
+    { hash:'0x3A8b...c6D8', type:'Campaign deposit', amount:300, fee:15, status:'confirmed', date:'Mar 25 2026' },
+    { hash:'0xB4C6...8B0C', type:'Escrow lock', amount:750, fee:37.5, status:'pending', date:'Mar 30 2026' },
+    { hash:'0xF2A4...6F8A', type:'Payment released', amount:-190, fee:10, status:'confirmed', date:'Mar 20 2026' },
+    { hash:'0x1D2E...9C0A', type:'Redemption', amount:-100, fee:2.5, status:'confirmed', date:'Mar 15 2026' },
+    { hash:'0x9B0C...3E4F', type:'Deposit', amount:1000, fee:0, status:'confirmed', date:'Mar 10 2026' },
+    { hash:'0x4A5B...7F8G', type:'Profile boost', amount:-50, fee:0, status:'confirmed', date:'Mar 5 2026' },
+    { hash:'0x2C3D...1A2B', type:'Payment released', amount:-95, fee:5, status:'confirmed', date:'Feb 28 2026' },
+  ],
+
+  pendingApprovals: [
+    { id:10, name:'Nadia Shah', niche:'Fashion', followers:5600, tier:'Nano', submitted:'Mar 30 2026' },
+    { id:11, name:'Bilal Ahmed', niche:'Gaming', followers:22000, tier:'Micro', submitted:'Mar 29 2026' },
+    { id:12, name:'Mariam Asif', niche:'Travel', followers:8900, tier:'Nano', submitted:'Mar 28 2026' },
+  ],
+
+  campaignStep: 1,
+};
+
+// ════════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+}
+
+function showAuth(tab) {
+  showPage('auth');
+  switchAuthTab(tab);
+}
+
+function showDashboard(role) {
+  DB.currentUser = DB.users.find(u => u.role === role) || DB.users[0];
+  DB.walletConnected = true;
+  initDashboard();
+  showPage('dashboard');
+}
+
+function showSection(name) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+  const section = document.getElementById('section-' + name);
+  if (section) { section.classList.add('active'); section.classList.add('fade-in'); }
+
+  const titles = {
+    overview:'Overview', campaigns:'Campaigns', marketplace:'Influencer marketplace',
+    'ai-match':'AI Matchmaking', payments:'Payments & Wallet', contracts:'Smart contracts',
+    analytics:'Analytics', profile:'Your profile', admin:'Admin panel'
+  };
+  document.getElementById('topbar-title').textContent = titles[name] || name;
+
+  const subs = {
+    overview: `Welcome back, ${DB.currentUser?.name}!`,
+    campaigns: 'Manage your campaigns',
+    marketplace: 'Browse 12,400+ creators',
+    'ai-match': 'ML-powered recommendations',
+    payments: 'Credo token management',
+    contracts: 'On-chain agreements',
+    analytics: 'Performance insights',
+    profile: 'Account settings',
+    admin: 'Platform administration'
+  };
+  document.getElementById('topbar-sub').textContent = subs[name] || '';
+
+  document.querySelectorAll('.nav-link').forEach(l => {
+    if (l.getAttribute('onclick')?.includes(`'${name}'`)) l.classList.add('active');
+  });
+
+  // Lazy render
+  if (name === 'marketplace') renderMarketplace();
+  if (name === 'payments') renderPayments();
+  if (name === 'contracts') renderContracts();
+  if (name === 'analytics') renderAnalytics();
+  if (name === 'admin') renderAdmin();
+}
+
+// ════════════════════════════════════════════════════════
+//  AUTH
+// ════════════════════════════════════════════════════════
+function switchAuthTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  document.getElementById('auth-login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('auth-register-form').style.display = tab === 'register' ? 'block' : 'none';
+}
+
+function handleLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-pass').value;
+  const user = DB.users.find(u => u.email === email && u.pass === pass);
+  if (user) {
+    DB.currentUser = user;
+    DB.walletConnected = !!user.wallet;
+    initDashboard();
+    showPage('dashboard');
+    toast('Welcome back, ' + user.name + '! 👋', 'success');
+  } else {
+    toast('Invalid credentials. Try brand@novatech.com', 'error');
+  }
+}
+
+function handleRegister() {
+  toast('Account created! Welcome to CredoConnect 🎉', 'success');
+  setTimeout(() => {
+    DB.currentUser = DB.users[0];
+    initDashboard();
+    showPage('dashboard');
+  }, 1000);
+}
+
+function logout() {
+  DB.currentUser = null;
+  showPage('landing');
+  toast('Signed out successfully');
+}
+
+// ════════════════════════════════════════════════════════
+//  WALLET
+// ════════════════════════════════════════════════════════
+function connectMetaMask() {
+  toast('🦊 Opening MetaMask...', 'info');
+  setTimeout(() => {
+    DB.walletConnected = true;
+    DB.walletAddr = '0x4f3cA8b2D1e0c7F5a9bE3d8c2F1a4e6b7d0C9E1';
+    DB.credoBalance = 2450;
+    updateWalletUI();
+    toast('✅ Wallet connected: 0x4f3c...C9E1', 'success');
+    document.getElementById('pf-wallet').value = DB.walletAddr;
+    closeModal('modal-deposit');
+    closeModal('modal-redeem');
+  }, 1500);
+}
+
+function updateWalletUI() {
+  const addr = DB.walletAddr;
+  const short = addr.slice(0,8) + '...' + addr.slice(-4);
+  document.getElementById('wallet-addr-display').textContent = short;
+  document.getElementById('wallet-credo-balance').textContent = DB.credoBalance.toLocaleString() + ' CREDO';
+  document.getElementById('wallet-usd').textContent = '≈ $' + (DB.credoBalance * 0.1).toFixed(0);
+  document.getElementById('wallet-connect-btn').textContent = '✅ Connected';
+  document.getElementById('wallet-connect-btn').style.background = '#F0FDF4';
+  document.getElementById('wallet-connect-btn').style.borderColor = '#BBF7D0';
+  document.getElementById('wallet-connect-btn').style.color = '#166534';
+  if (document.getElementById('pay-balance')) {
+    document.getElementById('pay-balance').textContent = DB.credoBalance.toLocaleString();
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  DASHBOARD INIT
+// ════════════════════════════════════════════════════════
+function initDashboard() {
+  const user = DB.currentUser;
+  if (!user) return;
+
+  // Topbar
+  document.getElementById('topbar-avatar').textContent = user.initials;
+  document.getElementById('topbar-name').textContent = user.name;
+  document.getElementById('topbar-role').textContent = user.role === 'influencer' ? 'Influencer · ' + (user.tier || 'Micro') : user.role === 'admin' ? 'Administrator' : 'Brand · ' + (user.plan || 'Free');
+
+  // Admin link
+  document.getElementById('admin-link').style.display = user.role === 'admin' ? 'flex' : 'none';
+
+  // Role-specific action button
+  if (user.role === 'influencer') {
+    document.getElementById('action-btn').textContent = '📋 Browse campaigns';
+    document.getElementById('action-btn').onclick = () => showSection('marketplace');
+  }
+
+  if (DB.walletConnected) updateWalletUI();
+
+  renderOverview();
+}
+
+// ════════════════════════════════════════════════════════
+//  OVERVIEW
+// ════════════════════════════════════════════════════════
+function renderOverview() {
+  // Metrics
+  const isInfluencer = DB.currentUser?.role === 'influencer';
+  const metrics = isInfluencer ? [
+    { icon:'📢', val:'5', label:'Active campaigns', change:'+1 this week', up:true },
+    { icon:'💰', val:'340', label:'CREDO earned', change:'+90 this month', up:true },
+    { icon:'👥', val:'84.2K', label:'Followers', change:'+1.2K this week', up:true },
+    { icon:'📈', val:'5.8%', label:'Engagement rate', change:'+0.3% this month', up:true },
+  ] : [
+    { icon:'📢', val:'4', label:'Active campaigns', change:'+1 this week', up:true },
+    { icon:'💰', val:'2,450', label:'CREDO balance', change:'≈ $245 USD', up:true },
+    { icon:'👥', val:'1.2M', label:'Total reach', change:'Across 4 campaigns', up:true },
+    { icon:'📈', val:'3.4×', label:'Avg. ROI', change:'+0.8× vs last month', up:true },
+  ];
+
+  document.getElementById('metric-grid').innerHTML = metrics.map(m => `
+    <div class="metric-card">
+      <div class="metric-icon">${m.icon}</div>
+      <div class="metric-val">${m.val}</div>
+      <div class="metric-label">${m.label}</div>
+      <div class="metric-change ${m.up?'up':'down'}">
+        ${m.up?'↑':'↓'} ${m.change}
+      </div>
+    </div>
+  `).join('');
+
+  // Campaign list
+  const activeCampaigns = DB.campaigns.filter(c => c.status === 'active' || c.status === 'pending');
+  document.getElementById('overview-campaigns-list').innerHTML = activeCampaigns.map(c => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);" onclick="showSection('campaigns')" style="cursor:pointer;">
+      <div style="width:36px;height:36px;border-radius:10px;background:var(--pl);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📢</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.title}</div>
+        <div style="font-size:11px;color:var(--text3);">${c.influencers.length} influencer${c.influencers.length!==1?'s':''} · ${c.budget} CREDO</div>
+      </div>
+      ${badgeHtml(c.status)}
+    </div>
+  `).join('');
+
+  // AI recommendations list
+  const recs = getAIRecommendations('Fashion', 'Micro').slice(0,3);
+  document.getElementById('overview-ai-list').innerHTML = recs.map((inf,i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:${i<2?'1px solid var(--border)':'none'};">
+      <div class="ai-score" style="width:36px;height:36px;font-size:12px;">${Math.round(inf._score)}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;">${inf.name}</div>
+        <div style="font-size:11px;color:var(--text3);">${inf.niche} · ${tierBadgeText(inf.tier)} · ${formatFollowers(inf.followers)}</div>
+      </div>
+      <button class="btn btn-xs btn-secondary" onclick="openInfluencer(${inf.id})">Invite</button>
+    </div>
+  `).join('');
+
+  // Chart
+  const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8'];
+  const reaches = [180,220,310,280,420,390,480,520];
+  const max = Math.max(...reaches);
+  document.getElementById('overview-chart').innerHTML = reaches.map((v,i) => `
+    <div class="chart-bar-wrap">
+      <div class="chart-bar" style="height:${(v/max*100)}%;"></div>
+    </div>
+  `).join('');
+  document.getElementById('chart-labels').innerHTML = weeks.map(w => `<div style="flex:1;text-align:center;font-size:10px;color:var(--text3);">${w}</div>`).join('');
+
+  // Contract status bar
+  const pendingContract = DB.campaigns.find(c => c.status === 'pending' && c.contractAddr);
+  if (pendingContract) {
+    document.getElementById('contract-status-bar').style.display = 'flex';
+    document.getElementById('contract-status-text').textContent = `Smart contract awaiting influencer signature for "${pendingContract.title}"`;
+    document.getElementById('contract-status-addr').textContent = pendingContract.contractAddr;
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  CAMPAIGNS
+// ════════════════════════════════════════════════════════
+function renderCampaignsGrid(filter = 'all') {
+  const list = filter === 'all' ? DB.campaigns : DB.campaigns.filter(c => c.status === filter);
+  document.getElementById('campaigns-grid').innerHTML = list.map(c => campaignCardHtml(c)).join('');
+}
+
+function campaignCardHtml(c) {
+  const statusColors = {active:'success',pending:'warning',completed:'info',draft:'gray'};
+  return `
+    <div class="card" style="cursor:pointer;" onclick="openCampaignDetail(${c.id})">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+        <div>
+          <div style="font-size:15px;font-weight:700;">${c.title}</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px;">${c.category} · ${c.tier} tier</div>
+        </div>
+        ${badgeHtml(c.status)}
+      </div>
+      <p style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:14px;">${c.description}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+        <div style="background:var(--pl2);border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:16px;font-weight:700;color:var(--p);">${c.budget}</div>
+          <div style="font-size:10px;color:var(--text3);">CREDO budget</div>
+        </div>
+        <div style="background:var(--pl2);border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:16px;font-weight:700;color:var(--p);">${c.influencers.length}</div>
+          <div style="font-size:10px;color:var(--text3);">Influencers</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:12px;">📋 ${c.deliverables}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:11px;color:var(--text3);">Deadline: ${c.deadline}</div>
+        <div style="display:flex;gap:6px;">
+          ${c.status==='active'?'<button class="btn btn-xs btn-secondary" onclick="event.stopPropagation();showSection(\'ai-match\')">🤖 Match</button>':''}
+          ${c.status==='pending'?'<button class="btn btn-xs btn-primary" onclick="event.stopPropagation();signContract('+c.id+')">🦊 Sign</button>':''}
+          ${c.status==='draft'?'<button class="btn btn-xs btn-primary" onclick="event.stopPropagation();deployDraft('+c.id+')">⛓️ Deploy</button>':''}
+        </div>
+      </div>
+      ${c.contractAddr ? `<div style="margin-top:10px;font-family:monospace;font-size:10px;color:var(--text3);background:var(--bg2);border-radius:6px;padding:4px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">⛓️ ${c.contractAddr}</div>` : ''}
+    </div>
+  `;
+}
+
+function filterCampaigns(f, btn) {
+  document.querySelectorAll('.tab-group .tab-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCampaignsGrid(f);
+}
+
+function openCampaignDetail(id) {
+  const c = DB.campaigns.find(c => c.id === id);
+  if (!c) return;
+  toast(`Viewing "${c.title}" — ${c.status}`);
+}
+
+function signContract(id) {
+  toast('🦊 Opening MetaMask to sign contract...');
+  setTimeout(() => {
+    const c = DB.campaigns.find(c => c.id === id);
+    if (c) { c.status = 'active'; renderCampaignsGrid(); }
+    toast('✅ Contract signed! Campaign is now active.', 'success');
+  }, 1500);
+}
+
+function deployDraft(id) {
+  toast('🦊 Deploying campaign to blockchain...');
+  setTimeout(() => {
+    const c = DB.campaigns.find(c => c.id === id);
+    if (c) {
+      c.status = 'pending';
+      c.contractAddr = '0x' + Math.random().toString(16).slice(2,42);
+      renderCampaignsGrid();
+    }
+    toast('⛓️ Campaign deployed! Awaiting influencer signature.', 'success');
+  }, 2000);
+}
+
+// ════════════════════════════════════════════════════════
+//  MARKETPLACE
+// ════════════════════════════════════════════════════════
+function renderMarketplace() {
+  const niche = document.getElementById('filter-niche')?.value || '';
+  const tier = document.getElementById('filter-tier')?.value || '';
+  let list = DB.influencers;
+  if (niche) list = list.filter(i => i.niche === niche);
+  if (tier) list = list.filter(i => i.tier === tier);
+
+  document.getElementById('marketplace-grid').innerHTML = list.map(inf => `
+    <div class="influencer-card" onclick="openInfluencer(${inf.id})">
+      <div class="inf-card-header">
+        <div class="inf-avatar" style="background:${inf.color}">${inf.name.split(' ').map(n=>n[0]).join('')}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="inf-name">${inf.name} ${inf.verified?'<span style="color:#6C4DFF;font-size:12px;">✓</span>':''}</div>
+          <div class="inf-handle">${inf.handle}</div>
+          <div style="margin-top:4px;display:flex;gap:5px;">
+            <span class="badge badge-${tierClass(inf.tier)}" style="font-size:10px;">${inf.tier}</span>
+            <span class="badge badge-gray" style="font-size:10px;">${inf.niche}</span>
+          </div>
+        </div>
+      </div>
+      <div class="inf-stats">
+        <div><div class="inf-stat-val">${formatFollowers(inf.followers)}</div><div class="inf-stat-label">Followers</div></div>
+        <div><div class="inf-stat-val">${inf.engagement}%</div><div class="inf-stat-label">Engagement</div></div>
+        <div><div class="inf-stat-val">${inf.successRate}%</div><div class="inf-stat-label">Success rate</div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <button class="btn btn-primary btn-xs" style="flex:1;justify-content:center;" onclick="event.stopPropagation();inviteInfluencer(${inf.id})">Invite to campaign</button>
+        <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();openInfluencer(${inf.id})">Profile</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openInfluencer(id) {
+  const inf = DB.influencers.find(i => i.id === id);
+  if (!inf) return;
+  document.getElementById('inf-modal-name').textContent = inf.name;
+  document.getElementById('inf-modal-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+      <div style="width:64px;height:64px;border-radius:18px;background:${inf.color};display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:white;">${inf.name.split(' ').map(n=>n[0]).join('')}</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;">${inf.name} ${inf.verified?'<span style="color:var(--p);">✓ Verified</span>':''}</div>
+        <div style="font-size:13px;color:var(--text3);">${inf.handle} · ${inf.location}</div>
+        <div style="margin-top:6px;display:flex;gap:6px;">
+          <span class="badge badge-${tierClass(inf.tier)}">${inf.tier}</span>
+          <span class="badge badge-gray">${inf.niche}</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:18px;">${inf.bio}</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+      ${[['Followers',formatFollowers(inf.followers)],['Engagement',inf.engagement+'%'],['Campaigns',inf.campaigns],['Success',inf.successRate+'%']].map(([l,v])=>`
+        <div style="text-align:center;background:var(--pl2);border-radius:var(--radius);padding:12px;">
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--p);">${v}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px;">${l}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="inviteInfluencer(${inf.id});closeModal('modal-influencer')">Invite to campaign</button>
+      <button class="btn btn-secondary" onclick="closeModal('modal-influencer')">Close</button>
+    </div>
+  `;
+  openModal('modal-influencer');
+}
+
+function inviteInfluencer(id) {
+  const inf = DB.influencers.find(i => i.id === id);
+  toast(`📩 Invitation sent to ${inf.name}! They'll be notified via email.`, 'success');
+}
+
+// ════════════════════════════════════════════════════════
+//  AI MATCHING
+// ════════════════════════════════════════════════════════
+function getAIRecommendations(category, preferredTier, wEng=35, wCat=25, wSuc=15) {
+  const tierOrder = ['Nano','Micro','Macro','Premium'];
+  return DB.influencers.map(inf => {
+    const normEng = Math.min(inf.engagement / 10, 1);
+    const tierDiff = Math.abs(tierOrder.indexOf(inf.tier) - tierOrder.indexOf(preferredTier));
+    const tierScore = Math.max(0, 1 - tierDiff * 0.3);
+    const catScore = inf.niche === category ? 1 : 0.2;
+    const successNorm = inf.successRate / 100;
+    const tierWeight = 100 - wEng - wCat - wSuc;
+    const score = (normEng * wEng + tierScore * tierWeight + catScore * wCat + successNorm * wSuc) / 100 * 100;
+    return { ...inf, _score: Math.min(score, 99) };
+  }).sort((a,b) => b._score - a._score);
+}
+
+function runAIMatch() {
+  const cat = document.getElementById('ai-category').value;
+  const tier = document.getElementById('ai-tier').value === 'Any' ? 'Micro' : document.getElementById('ai-tier').value;
+  const wEng = parseInt(document.getElementById('w-eng-val').textContent);
+  const wCat = parseInt(document.getElementById('w-cat-val').textContent);
+  const wSuc = parseInt(document.getElementById('w-suc-val').textContent);
+
+  toast('🤖 Running AI recommendation model...');
+  setTimeout(() => {
+    const recs = getAIRecommendations(cat, tier, wEng, wCat, wSuc);
+    document.getElementById('ai-results-label').textContent = `Top ${Math.min(recs.length,9)} matches for ${cat}`;
+    document.getElementById('ai-results-list').innerHTML = recs.slice(0,9).map((inf,i) => `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
+        <div style="font-size:12px;font-weight:700;color:var(--text3);min-width:18px;text-align:right;">#${i+1}</div>
+        <div class="ai-score" style="width:38px;height:38px;font-size:12px;">${Math.round(inf._score)}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:600;">${inf.name} ${inf.verified?'<span style="color:var(--p);font-size:11px;">✓</span>':''}</div>
+          <div class="score-bar" style="margin-top:4px;">
+            <div class="score-track"><div class="score-fill" style="width:${inf._score}%;"></div></div>
+            <span class="score-val">${Math.round(inf._score)}%</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;">${inf.niche} · ${inf.tier} · ${inf.engagement}% eng.</div>
+        </div>
+        <button class="btn btn-xs btn-secondary" onclick="inviteInfluencer(${inf.id})">Invite</button>
+      </div>
+    `).join('');
+    toast('✅ AI match complete! ' + recs.length + ' influencers ranked.', 'success');
+  }, 800);
+}
+
+// ════════════════════════════════════════════════════════
+//  PAYMENTS
+// ════════════════════════════════════════════════════════
+function renderPayments() {
+  document.getElementById('pay-balance').textContent = DB.credoBalance.toLocaleString();
+  document.getElementById('tx-count').textContent = DB.transactions.length + ' transactions';
+  document.getElementById('tx-table').innerHTML = DB.transactions.map(tx => `
+    <tr>
+      <td><span class="mono" style="font-size:11px;color:var(--p);">${tx.hash}</span></td>
+      <td>${tx.type}</td>
+      <td style="font-weight:600;color:${tx.amount>0?'var(--success)':'var(--danger)'};">${tx.amount>0?'+':''}${tx.amount} CREDO</td>
+      <td style="color:var(--text3);">${tx.fee} CREDO</td>
+      <td>${badgeHtml(tx.status)}</td>
+      <td style="color:var(--text3);">${tx.date}</td>
+    </tr>
+  `).join('');
+}
+
+function openDepositModal() { openModal('modal-deposit'); }
+function openRedeemModal() { openModal('modal-redeem'); }
+
+function handleDeposit() {
+  const amt = parseInt(document.getElementById('deposit-amount').value) || 0;
+  if (!amt || amt < 1) { toast('Enter a valid amount', 'error'); return; }
+  toast('🦊 Confirm in MetaMask...');
+  setTimeout(() => {
+    DB.credoBalance += amt;
+    DB.transactions.unshift({ hash:'0x'+Math.random().toString(16).slice(2,14)+'...', type:'Deposit', amount:amt, fee:0, status:'confirmed', date:'Now' });
+    updateWalletUI();
+    renderPayments();
+    closeModal('modal-deposit');
+    toast(`✅ Deposited ${amt} CREDO successfully!`, 'success');
+  }, 1500);
+}
+
+function handleRedeem() {
+  const amt = parseInt(document.getElementById('redeem-amount').value) || 0;
+  const to = document.getElementById('redeem-to').value;
+  if (!amt || amt < 1) { toast('Enter a valid amount', 'error'); return; }
+  if (amt > DB.credoBalance) { toast('Insufficient CREDO balance', 'error'); return; }
+  const fee = Math.ceil(amt * 0.025);
+  toast(`💱 Processing redemption to ${to}...`);
+  setTimeout(() => {
+    DB.credoBalance -= (amt + fee);
+    DB.transactions.unshift({ hash:'0x'+Math.random().toString(16).slice(2,14)+'...', type:'Redemption → '+to, amount:-amt, fee, status:'confirmed', date:'Now' });
+    updateWalletUI();
+    renderPayments();
+    closeModal('modal-redeem');
+    toast(`✅ Redeemed ${amt} CREDO to ${to}! $${(amt*0.1).toFixed(2)} sent.`, 'success');
+  }, 1500);
+}
+
+// ════════════════════════════════════════════════════════
+//  CONTRACTS
+// ════════════════════════════════════════════════════════
+function renderContracts() {
+  const withContracts = DB.campaigns.filter(c => c.contractAddr);
+  document.getElementById('contracts-list').innerHTML = withContracts.map(c => `
+    <div class="card mb-4">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:15px;font-weight:700;">${c.title}</div>
+          <div class="mono" style="font-size:11px;color:var(--p);margin-top:4px;">${c.contractAddr}</div>
+        </div>
+        ${badgeHtml(c.status)}
+      </div>
+      <div class="chain-flow" style="margin:16px 0;">
+        <div class="chain-node ${c.status!=='draft'?'done':''}"><div class="chain-icon">📝</div><div class="chain-label">Created</div><div class="chain-sub">${c.status==='draft'?'Pending':'Done'}</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node ${c.status==='active'||c.status==='completed'?'done':c.status==='pending'?'active':''}"><div class="chain-icon">🦊</div><div class="chain-label">Signed</div><div class="chain-sub">${c.status==='pending'?'Awaiting':'${c.status==="active"?"Both signed":"—"}'}</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node ${c.status==='active'?'active':c.status==='completed'?'done':''}"><div class="chain-icon">⚡</div><div class="chain-label">Active</div><div class="chain-sub">${c.status==='active'?'Live':c.status==='completed'?'Done':'—'}</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node ${c.status==='completed'?'done':''}"><div class="chain-icon">💰</div><div class="chain-label">Paid</div><div class="chain-sub">${c.status==='completed'?'Released':'Pending'}</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:12px;">
+        <div><div style="color:var(--text3);">Budget</div><div style="font-weight:600;margin-top:2px;">${c.budget} CREDO</div></div>
+        <div><div style="color:var(--text3);">Platform fee (5%)</div><div style="font-weight:600;margin-top:2px;">${Math.round(c.budget*0.05)} CREDO</div></div>
+        <div><div style="color:var(--text3);">Influencer payout</div><div style="font-weight:600;margin-top:2px;color:var(--success);">${Math.round(c.budget*0.95)} CREDO</div></div>
+        <div><div style="color:var(--text3);">Deadline</div><div style="font-weight:600;margin-top:2px;">${c.deadline}</div></div>
+      </div>
+      ${c.status==='active'?`
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button class="btn btn-primary btn-sm" onclick="approveDeliverable(${c.id})">✅ Approve deliverable & release payment</button>
+          <button class="btn btn-danger btn-sm">⚠️ Dispute</button>
+        </div>
+      `:''}
+    </div>
+  `).join('');
+}
+
+function approveDeliverable(id) {
+  toast('🦊 Confirm payment release in MetaMask...');
+  setTimeout(() => {
+    const c = DB.campaigns.find(c => c.id === id);
+    if (c) {
+      const payout = Math.round(c.budget * 0.95);
+      DB.credoBalance -= c.budget;
+      DB.transactions.unshift({ hash:'0x'+Math.random().toString(16).slice(2,14)+'...', type:'Payment released', amount:-payout, fee:Math.round(c.budget*0.05), status:'confirmed', date:'Now' });
+      c.status = 'completed';
+      renderContracts();
+      updateWalletUI();
+    }
+    toast(`✅ Payment of ${Math.round(DB.campaigns.find(c=>c.id===id)?.budget||0*0.95)} CREDO released!`, 'success');
+  }, 2000);
+}
+
+// ════════════════════════════════════════════════════════
+//  ANALYTICS
+// ════════════════════════════════════════════════════════
+function renderAnalytics() {
+  const metrics = [
+    { icon:'🎯', val:'4.2%', label:'Avg. engagement rate', change:'Industry avg: 2.1%', up:true },
+    { icon:'👁️', val:'2.8M', label:'Total impressions', change:'+340K this month', up:true },
+    { icon:'💰', val:'3.4×', label:'Campaign ROI', change:'+0.8× vs prev period', up:true },
+    { icon:'✅', val:'94%', label:'Deliverable completion', change:'+2% this month', up:true },
+  ];
+  document.getElementById('analytics-metrics').innerHTML = metrics.map(m => `
+    <div class="metric-card">
+      <div class="metric-icon">${m.icon}</div>
+      <div class="metric-val">${m.val}</div>
+      <div class="metric-label">${m.label}</div>
+      <div class="metric-change up">↑ ${m.change}</div>
+    </div>
+  `).join('');
+
+  const campaignNames = DB.campaigns.map(c => c.title.split(' ').slice(0,2).join(' '));
+  const engValues = [5.2, 4.8, 6.1, 3.9, 4.5];
+  const maxEng = Math.max(...engValues);
+  document.getElementById('analytics-chart1').innerHTML = engValues.map((v,i) => `
+    <div class="chart-bar-wrap">
+      <div class="chart-bar" style="height:${(v/maxEng*100)}%;background:linear-gradient(180deg,hsl(${240+i*20},80%,60%),hsl(${250+i*20},80%,75%));"></div>
+    </div>
+  `).join('');
+  document.getElementById('analytics-chart1-labels').innerHTML = campaignNames.map(n => `<div style="flex:1;text-align:center;font-size:9px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n}</div>`).join('');
+
+  const rois = [
+    ['Summer fashion launch','Fashion','+2.4×','↑','success'],
+    ['Tech review series','Tech','+4.1×','↑','success'],
+    ['Gaming tournament','Gaming','+1.8×','↑','warning'],
+    ['Fitness challenge','Fitness','+3.6×','↑','success'],
+  ];
+  document.getElementById('analytics-roi-table').innerHTML = `
+    <table style="width:100%;font-size:13px;border-collapse:collapse;">
+      <thead><tr><th style="text-align:left;padding:8px;font-size:11px;color:var(--text3);font-weight:600;">Campaign</th><th style="text-align:left;padding:8px;font-size:11px;color:var(--text3);font-weight:600;">ROI</th></tr></thead>
+      <tbody>${rois.map(([name,cat,roi,arrow,cls]) => `
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid var(--border);">${name}<br><span style="font-size:11px;color:var(--text3);">${cat}</span></td>
+          <td style="padding:8px;border-bottom:1px solid var(--border);"><span class="badge badge-${cls}">${arrow} ${roi}</span></td>
+        </tr>
+      `).join('')}</tbody>
+    </table>`;
+
+  const topPerformers = [
+    { inf:'Zara Malik', campaign:'Summer fashion', reach:'84K', eng:'5.8%', roi:'2.4×', status:'completed' },
+    { inf:'Ahmed Siddiqui', campaign:'Tech reviews', reach:'210K', eng:'4.2%', roi:'4.1×', status:'active' },
+    { inf:'Rida Khan', campaign:'Fitness challenge', reach:'67K', eng:'6.1%', roi:'3.6×', status:'completed' },
+    { inf:'Omar Farooq', campaign:'Gaming promo', reach:'450K', eng:'3.8%', roi:'1.8×', status:'pending' },
+  ];
+  document.getElementById('analytics-table').innerHTML = topPerformers.map(r => `
+    <tr>
+      <td><strong>${r.inf}</strong></td>
+      <td style="color:var(--text2);">${r.campaign}</td>
+      <td><strong>${r.reach}</strong></td>
+      <td><strong>${r.eng}</strong></td>
+      <td><span class="badge badge-success">${r.roi}</span></td>
+      <td>${badgeHtml(r.status)}</td>
+    </tr>
+  `).join('');
+}
+
+function exportReport() {
+  const csv = 'Campaign,Influencer,Reach,Engagement,ROI,Status\n' +
+    'Summer fashion launch,Zara Malik,84000,5.8%,2.4x,completed\n' +
+    'Tech review series,Ahmed Siddiqui,210000,4.2%,4.1x,active\n' +
+    'Fitness challenge,Rida Khan,67000,6.1%,3.6x,completed\n';
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'credoconnect_analytics.csv';
+  a.click();
+  toast('📥 Analytics report downloaded!', 'success');
+}
+
+// ════════════════════════════════════════════════════════
+//  ADMIN
+// ════════════════════════════════════════════════════════
+function renderAdmin() {
+  const adminMetrics = [
+    { icon:'👥', val:'12,400', label:'Total influencers', change:'+124 this week', up:true },
+    { icon:'🏢', val:'842', label:'Active brands', change:'+18 this week', up:true },
+    { icon:'📢', val:'3,210', label:'Total campaigns', change:'+67 this week', up:true },
+    { icon:'💰', val:'$48.2K', label:'Platform revenue', change:'+$3.1K this week', up:true },
+  ];
+  document.getElementById('admin-metrics').innerHTML = adminMetrics.map(m => `
+    <div class="metric-card">
+      <div class="metric-icon">${m.icon}</div>
+      <div class="metric-val">${m.val}</div>
+      <div class="metric-label">${m.label}</div>
+      <div class="metric-change up">↑ ${m.change}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('pending-count').textContent = DB.pendingApprovals.length + ' pending';
+  document.getElementById('admin-pending-list').innerHTML = DB.pendingApprovals.map(inf => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="width:36px;height:36px;border-radius:10px;background:var(--pl);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--p);flex-shrink:0;">${inf.name.split(' ').map(n=>n[0]).join('')}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;">${inf.name}</div>
+        <div style="font-size:11px;color:var(--text3);">${inf.niche} · ${inf.tier} · ${formatFollowers(inf.followers)} followers</div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-xs" style="background:#DCFCE7;color:#166534;border:none;" onclick="approveInfluencer(${inf.id},'${inf.name}')">✓ Approve</button>
+        <button class="btn btn-xs btn-danger" onclick="rejectInfluencer(${inf.id},'${inf.name}')">✗ Reject</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('admin-users-table').innerHTML = DB.users.map(u => `
+    <tr>
+      <td><strong>${u.name}</strong></td>
+      <td><span class="badge badge-${u.role==='admin'?'warning':u.role==='brand'?'info':'success'}">${u.role}</span></td>
+      <td><span class="mono" style="font-size:11px;color:var(--text3);">${u.wallet?u.wallet.slice(0,16)+'...':'—'}</span></td>
+      <td><span class="badge badge-success">${u.status||'active'}</span></td>
+      <td style="color:var(--text3);">${u.joined}</td>
+      <td><button class="btn btn-xs btn-ghost">Manage</button></td>
+    </tr>
+  `).join('');
+}
+
+function approveInfluencer(id, name) {
+  DB.pendingApprovals = DB.pendingApprovals.filter(i => i.id !== id);
+  renderAdmin();
+  toast(`✅ ${name} approved as verified influencer!`, 'success');
+}
+
+function rejectInfluencer(id, name) {
+  DB.pendingApprovals = DB.pendingApprovals.filter(i => i.id !== id);
+  renderAdmin();
+  toast(`${name}'s application rejected.`);
+}
+
+function saveAdminSettings() {
+  toast('✅ Platform settings saved on-chain!', 'success');
+}
+
+// ════════════════════════════════════════════════════════
+//  CAMPAIGN MODAL
+// ════════════════════════════════════════════════════════
+function openCreateCampaign() {
+  DB.campaignStep = 1;
+  updateCampaignStepUI();
+  openModal('modal-campaign');
+  // Set default deadline
+  const d = new Date(); d.setDate(d.getDate()+30);
+  document.getElementById('nc-deadline').value = d.toISOString().split('T')[0];
+}
+
+function campaignStepNext() {
+  if (DB.campaignStep === 1) {
+    const title = document.getElementById('nc-title').value;
+    if (!title.trim()) { toast('Please enter a campaign title', 'error'); return; }
+    DB.campaignStep = 2;
+    updateBudgetCalc();
+  } else if (DB.campaignStep === 2) {
+    const budget = parseInt(document.getElementById('nc-budget').value) || 0;
+    if (budget < 10) { toast('Minimum budget is 10 CREDO', 'error'); return; }
+    DB.campaignStep = 3;
+  } else if (DB.campaignStep === 3) {
+    deployNewCampaign();
+    return;
+  }
+  updateCampaignStepUI();
+}
+
+function campaignStepBack() {
+  if (DB.campaignStep > 1) { DB.campaignStep--; updateCampaignStepUI(); }
+}
+
+function updateCampaignStepUI() {
+  const s = DB.campaignStep;
+  document.getElementById('campaign-step-1').style.display = s===1?'block':'none';
+  document.getElementById('campaign-step-2').style.display = s===2?'block':'none';
+  document.getElementById('campaign-step-3').style.display = s===3?'block':'none';
+  document.getElementById('modal-back-btn').style.display = s>1?'block':'none';
+  document.getElementById('modal-next-btn').textContent = s===3?'⛓️ Deploy to blockchain':'Next →';
+
+  const steps = document.querySelectorAll('#campaign-steps .step');
+  steps.forEach((step, i) => {
+    step.classList.remove('active','done');
+    if (i+1 < s) step.classList.add('done');
+    else if (i+1 === s) step.classList.add('active');
+  });
+}
+
+function updateBudgetCalc() {
+  const budget = parseInt(document.getElementById('nc-budget')?.value) || 500;
+  const fee = Math.round(budget * 0.05);
+  document.getElementById('nc-budget-display').textContent = budget + ' CREDO';
+  document.getElementById('nc-fee-display').textContent = fee + ' CREDO';
+  document.getElementById('nc-total-display').textContent = (budget + fee) + ' CREDO';
+}
+
+function deployNewCampaign() {
+  toast('🦊 Opening MetaMask to deploy escrow contract...');
+  const statusEl = document.getElementById('deploy-status');
+  statusEl.className = 'alert alert-warn';
+  statusEl.innerHTML = '<span>⏳</span><span>Waiting for MetaMask confirmation...</span>';
+
+  setTimeout(() => {
+    document.getElementById('step3-node2').classList.add('done');
+    document.getElementById('step3-node2').classList.remove('active');
+    document.getElementById('step3-node3').classList.add('active');
+    statusEl.innerHTML = '<span>⛓️</span><span>Deploying to Sepolia testnet...</span>';
+  }, 1200);
+
+  setTimeout(() => {
+    document.getElementById('step3-node3').classList.add('done');
+    document.getElementById('step3-node3').classList.remove('active');
+    document.getElementById('step3-node4').classList.add('active');
+    statusEl.className = 'alert alert-success';
+    statusEl.innerHTML = '<span>🎉</span><span>Campaign deployed! Contract: 0x' + Math.random().toString(16).slice(2,42) + '</span>';
+
+    const newCampaign = {
+      id: DB.campaigns.length + 1,
+      title: document.getElementById('nc-title').value || 'New campaign',
+      category: document.getElementById('nc-category').value,
+      description: document.getElementById('nc-desc').value || 'Campaign description',
+      deliverables: document.getElementById('nc-deliverables').value || 'TBD',
+      budget: parseInt(document.getElementById('nc-budget').value) || 500,
+      tier: document.getElementById('nc-tier').value,
+      deadline: document.getElementById('nc-deadline').value,
+      status: 'pending',
+      influencers: [],
+      contractAddr: '0x' + Math.random().toString(16).slice(2,42),
+      brand: 1
+    };
+    DB.campaigns.unshift(newCampaign);
+    document.getElementById('badge-campaigns').textContent = DB.campaigns.length;
+
+    setTimeout(() => {
+      closeModal('modal-campaign');
+      showSection('campaigns');
+      toast('🎉 Campaign deployed successfully!', 'success');
+    }, 1000);
+  }, 3000);
+}
+
+function saveProfile() {
+  toast('✅ Profile saved!', 'success');
+}
+
+// ════════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════════
+function badgeHtml(status) {
+  const map = {
+    active:['success','Live'],
+    pending:['warning','Pending'],
+    completed:['info','Completed'],
+    draft:['gray','Draft'],
+    confirmed:['success','Confirmed'],
+    disputed:['danger','Disputed'],
+  };
+  const [cls, label] = map[status] || ['gray', status];
+  return `<span class="badge badge-${cls}"><span class="badge-dot"></span>${label}</span>`;
+}
+
+function tierClass(tier) {
+  return {Nano:'nano',Micro:'micro',Macro:'macro',Premium:'premium'}[tier] || 'gray';
+}
+
+function tierBadgeText(tier) {
+  return `<span class="badge tier-${tierClass(tier)}">${tier}</span>`;
+}
+
+function formatFollowers(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(n>=100000?0:1) + 'K';
+  return n;
+}
+
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function toast(msg, type='info') {
+  const container = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type === 'success' ? 'success' : type === 'error' ? 'error' : '');
+  const icons = {success:'✅',error:'❌',info:'ℹ️'};
+  t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  container.appendChild(t);
+  setTimeout(() => t.remove(), 4200);
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+});
+
+// Init campaigns section on load
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.tab-item').forEach(btn => {
+    if (btn.parentElement.id === undefined) return;
+  });
+});
+
+// Watch for campaigns section becoming active
+const observer = new MutationObserver(() => {
+  const el = document.getElementById('section-campaigns');
+  if (el && el.classList.contains('active')) {
+    if (!el.dataset.rendered) { renderCampaignsGrid(); el.dataset.rendered = '1'; }
+  }
+});
+observer.observe(document.getElementById('section-campaigns'), {attributes:true, attributeFilter:['class']});
+</script>
+</body>
+</html>
